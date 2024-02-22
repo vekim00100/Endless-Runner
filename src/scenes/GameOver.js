@@ -4,6 +4,16 @@ class GameOver extends Phaser.Scene {
     }
 
     create() {
+         // play and loop gameover background music
+         this.gobgm = this.sound.add('gobgm', {
+            volume: 1,
+            loop: true
+         })
+        if (!this.musicPlayed) {
+            this.gobgm.play()
+            this.musicPlayed = true
+        }
+
         // background
         this.graveyard = this.add.tileSprite(0, 0, 0, 0, 'graveyard').setOrigin(0, 0)
 
@@ -21,16 +31,28 @@ class GameOver extends Phaser.Scene {
 
     update() {
         if(Phaser.Input.Keyboard.JustDown(this.keyM)) {
+            if(this.gobgm) {
+                this.gobgm.stop()
+                this.gobgm.destroy()
+            }
             this.scene.start('menuScene')
         }
 
         // check for R input for restart
         if(Phaser.Input.Keyboard.JustDown(this.keyR)) {
+            if(this.gobgm) {
+                this.gobgm.stop()
+                this.gobgm.destroy()
+            }
             this.scene.start('playScene')
         }
 
         // check for C input for restart
         if(Phaser.Input.Keyboard.JustDown(this.keyC)) {
+            if(this.gobgm) {
+                this.gobgm.stop()
+                this.gobgm.destroy()
+            }
             this.scene.start('creditsScene')
         }
     }

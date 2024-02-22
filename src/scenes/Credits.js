@@ -25,3 +25,5 @@ class Credits extends Phaser.Scene {
         }
     }
 }
+
+// game over music: https://pixabay.com/music/video-games-kl-peach-game-over-ii-135684/

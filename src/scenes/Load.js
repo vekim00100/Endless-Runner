@@ -25,6 +25,8 @@ class Load extends Phaser.Scene {
         })
 
         // load audio assets
+        this.load.audio('death', 'audio/death.wav')
+        this.load.audio('gobgm', 'audio/gameover.mp3')
 
         // load font
     }

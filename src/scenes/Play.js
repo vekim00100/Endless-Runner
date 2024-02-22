@@ -75,7 +75,7 @@ class Play extends Phaser.Scene {
     }
 
     graveCollision(ghost, grave) {
-        // this.sound.play('gameOverSound', { volume: 1 })
+        this.sound.play('death', { volume: 0.5 })
 
         ghost.destroyed = true
 
