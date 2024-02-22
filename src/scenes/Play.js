@@ -4,6 +4,16 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // play and loop background music
+        this.bgm = this.sound.add('bgm', {
+            volume: 1,
+            loop: true
+        })
+        if(!this.musicPlayed) {
+            this.bgm.play()
+            this.musicPlayed = true
+        }
+
         // graveyard scrolling speed
         this.gameSpeed = 8
 
@@ -83,7 +93,9 @@ class Play extends Phaser.Scene {
 
     graveCollision(ghost, grave) {
         if(!this.ghostCollided) {
-            this.sound.play('death', { volume: 0.5 })
+            this.sound.play('death', { volume: 1 })
+            this.bgm.stop()
+            this.musicPlayed = false
 
             this.ghostCollided = true
             ghost.destroyed = true

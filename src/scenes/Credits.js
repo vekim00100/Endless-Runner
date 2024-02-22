@@ -25,5 +25,6 @@ class Credits extends Phaser.Scene {
         }
     }
 }
-
+// bgm: https://freesound.org/people/betabeats./sounds/650965/
+// death sound: https://freesound.org/people/Eponn/sounds/676806/
 // game over music: https://pixabay.com/music/video-games-kl-peach-game-over-ii-135684/

@@ -4,12 +4,12 @@ class GameOver extends Phaser.Scene {
     }
 
     create() {
-         // play and loop gameover background music
-         this.gobgm = this.sound.add('gobgm', {
+        // play and loop gameover background music
+        this.gobgm = this.sound.add('gobgm', {
             volume: 1,
             loop: true
-         })
-        if (!this.musicPlayed) {
+        })
+        if(!this.musicPlayed) {
             this.gobgm.play()
             this.musicPlayed = true
         }
