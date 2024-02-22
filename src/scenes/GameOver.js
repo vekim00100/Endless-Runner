@@ -3,7 +3,7 @@ class GameOver extends Phaser.Scene {
         super('gameOverScene')
     }
 
-    create() {
+    create(data) {
         // play and loop gameover background music
         this.gobgm = this.sound.add('gobgm', {
             volume: 1,
@@ -18,7 +18,7 @@ class GameOver extends Phaser.Scene {
         this.graveyard = this.add.tileSprite(0, 0, 0, 0, 'graveyard').setOrigin(0, 0)
 
         // game over text
-        this.add.text(game.config.width / 2, game.config.height / 2, 'Press [M] for Menu \n [C] for Credits \n [R] to Restart', {
+        this.add.text(centerX, centerY, 'Press [M] for Menu \n [C] for Credits \n [R] to Restart', {
             fontSize: '24px',
             fill: '#ffffff', 
             align: 'center'
@@ -27,6 +27,20 @@ class GameOver extends Phaser.Scene {
         this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M)
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
         this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
+
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '32px',
+            color: '#b1f3f4',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5
+            },
+            fixedWidth: 650
+        }
+
+        this.add.text(centerX, 10, `Score: ${data.score}`, scoreConfig).setOrigin(0.5, 0).setDepth(1)
     }
 
     update() {

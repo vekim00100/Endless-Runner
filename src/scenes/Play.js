@@ -4,6 +4,24 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // initialize score
+        this.score = 0
+
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '32px',
+            color: '#b1f3f4',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5
+            },
+            fixedWidth: 650
+        }
+
+        // game over text
+        this.scoreText = this.add.text(centerX, 10, `Score: ${this.score}`, scoreConfig).setOrigin(0.5, 0).setDepth(1)
+
         // play and loop background music
         this.bgm = this.sound.add('bgm', {
             volume: 1,
@@ -57,6 +75,11 @@ class Play extends Phaser.Scene {
 
         // Add collision between the ghost and graves
         this.physics.add.collider(this.ghost, this.graveGroup, this.graveCollision, null, this)
+    
+        // initalize variabled related to game state
+        this.startTime = 0
+        this.difficultyIncreased = false
+        this.musicPlayed = false
     }
     
     addGrave() {
@@ -66,6 +89,25 @@ class Play extends Phaser.Scene {
         }
     
     update() {
+        if(!this.startTime) {
+            this.startTime = this.time.now
+        }
+
+        // update score based on elapsed time
+        if(!this.ghost.destroyed) {
+            const elapsedTime = this.time.now - this.startTime
+            this.score = Math.floor(elapsedTime / 100)
+
+            // display updated score
+            this.scoreText.setText('Score: ' + this.score)
+
+             // increase difficulty after 17 seconds 
+            if(elapsedTime > 17000 && !this.difficultyIncreased) {
+                this.gameSpeed += 2
+                this.difficultyIncreased = true
+            }
+        }
+
         // movement keys
         if(!this.ghost.destroyed) {
             if(cursors.up.isDown) {
@@ -101,7 +143,8 @@ class Play extends Phaser.Scene {
             ghost.destroyed = true
 
             this.time.delayedCall(1500, () => {
-                this.scene.start('gameOverScene')
+                // pass the score to the gamerOver scene
+                this.scene.start('gameOverScene', { score: this.score } )
         })
         }
     }
