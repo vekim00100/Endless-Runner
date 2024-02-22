@@ -39,6 +39,12 @@ class Play extends Phaser.Scene {
         this.time.delayedCall(1000, () => {
             this.addGrave()
         })
+
+        // enable physics for ghost
+        this.physics.world.enable(this.ghost)
+
+        // Add collision between the ghost and graves
+        this.physics.add.collider(this.ghost, this.graveGroup, this.graveCollision, null, this)
     }
     
     addGrave() {
@@ -46,7 +52,7 @@ class Play extends Phaser.Scene {
         let grave = new Grave(this, ghostVelocity - speedVary)
         this.graveGroup.add(grave)
         }
-
+    
     update() {
         // movement keys
         if(!this.ghost.destroyed) {
@@ -65,6 +71,16 @@ class Play extends Phaser.Scene {
 
         this.graveGroup.children.iterate((grave) => {
             grave.update()
+        })
+    }
+
+    graveCollision(ghost, grave) {
+        // this.sound.play('gameOverSound', { volume: 1 })
+
+        ghost.destroyed = true
+
+        this.time.delayedCall(1500, () => {
+            this.scene.start('gameOverScene')
         })
     }
 }
