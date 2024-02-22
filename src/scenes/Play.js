@@ -40,6 +40,8 @@ class Play extends Phaser.Scene {
             this.addGrave()
         })
 
+        this.ghostCollided = false
+
         // enable physics for ghost
         this.physics.world.enable(this.ghost)
 
@@ -63,6 +65,11 @@ class Play extends Phaser.Scene {
             }
         }
 
+        // Disable further collisions until the game restarts
+        if(!this.ghost.destroyed && this.ghostCollided) {
+            this.ghostCollider.active = false
+        }
+
         // graveyard scrolling
         this.graveyard.tilePositionX += this.gameSpeed
 
@@ -75,12 +82,15 @@ class Play extends Phaser.Scene {
     }
 
     graveCollision(ghost, grave) {
-        this.sound.play('death', { volume: 0.5 })
+        if(!this.ghostCollided) {
+            this.sound.play('death', { volume: 0.5 })
 
-        ghost.destroyed = true
+            this.ghostCollided = true
+            ghost.destroyed = true
 
-        this.time.delayedCall(1500, () => {
-            this.scene.start('gameOverScene')
+            this.time.delayedCall(1500, () => {
+                this.scene.start('gameOverScene')
         })
+        }
     }
 }
