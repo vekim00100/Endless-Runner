@@ -16,6 +16,9 @@ let config = {
     scale: {
         autoCenter: Phaser.Scale.CENTER // centers the screen
     },
+    render: {
+        pixelArt: true
+    },
     physics: {
         default: 'arcade',
         arcade: {
@@ -34,7 +37,9 @@ let centerY = game.config.height/2
 let w = game.config.width
 let h = game.config.height
 
-const ghostVelocity = 50
+const ghostWidth = 50
+const ghostHeight = 64
+const ghostVelocity = 15
 
 let cursors
 let { height, width } = game.config

@@ -4,6 +4,17 @@ class Load extends Phaser.Scene {
     }
 
     preload() {
+        // loading bar from PaddleParkour
+        let loadingBar = this.add.graphics()
+        this.load.on('progress', (value) => {
+            loadingBar.clear()
+            loadingBar.fillStyle(0X0FFFF, 1)
+            loadingBar.fillRect(0, centerY - 75, w * value, 60)
+        })
+        this.load.on('complete', () => {
+            loadingBar.destroy()
+        })
+
         this.load.path = './assets/'
         
         // load graphics assets

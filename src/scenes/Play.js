@@ -4,7 +4,11 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        this.gameSpeed = 10
+        // graveyard scrolling speed
+        this.gameSpeed = 8
+
+        // background
+        this.graveyard = this.add.tileSprite(0, 0, 0, 0, 'graveyard').setOrigin(0, 0)
 
         // create animations for ghost
         this.anims.create({
@@ -17,21 +21,34 @@ class Play extends Phaser.Scene {
             })
         })
 
-        // background
-        this.graveyard = this.add.tileSprite(0, 0, 0, 0, 'graveyard').setOrigin(0, 0)
-        
-
         // ghost sprite
         this.ghost = this.physics.add.sprite(64, centerY, 'ghost').setOrigin(0.5)
         this.ghost.body.setCollideWorldBounds(true)
+        this.ghost.setImmovable()
         this.ghost.body.setSize(50, 64).setOffset(6, 0)
         this.ghost.destroyed = false
 
+        // set up grave group
+        this.graveGroup = this.add.group({
+            runChildUpdate: true
+        })
+
         // set up cursor keys
         cursors = this.input.keyboard.createCursorKeys()
+
+        this.time.delayedCall(1000, () => {
+            this.addGrave()
+        })
     }
     
+    addGrave() {
+        let speedVary = Phaser.Math.Between(500, 500)
+        let grave = new Grave(this, ghostVelocity - speedVary)
+        this.graveGroup.add(grave)
+        }
+
     update() {
+        // movement keys
         if(!this.ghost.destroyed) {
             if(cursors.up.isDown) {
                 this.ghost.body.velocity.y -= ghostVelocity
@@ -45,5 +62,9 @@ class Play extends Phaser.Scene {
 
         // ghost move animation
         this.ghost.play('ghost-move', true)
+
+        this.graveGroup.children.iterate((grave) => {
+            grave.update()
+        })
     }
 }
