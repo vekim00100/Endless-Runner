@@ -1,5 +1,5 @@
 class Grave extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, velocity, sprite) {
+    constructor(scene, velocity) {
        super(scene, game.config.width + ghostWidth, Phaser.Math.Between(ghostHeight/2, game.config.height - ghostHeight/2), 'grave')
 
         this.parentScene = scene

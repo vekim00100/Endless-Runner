@@ -33,7 +33,9 @@ class Play extends Phaser.Scene {
         }
 
         // graveyard scrolling speed
-        this.gameSpeed = 8
+        this.gameSpeed = 5
+
+        this.graveSpeed = -600
 
         // background
         this.graveyard = this.add.tileSprite(0, 0, 0, 0, 'graveyard').setOrigin(0, 0)
@@ -83,8 +85,7 @@ class Play extends Phaser.Scene {
     }
     
     addGrave() {
-        let speedVary = Phaser.Math.Between(500, 500)
-        let grave = new Grave(this, ghostVelocity - speedVary)
+        let grave = new Grave(this, this.graveSpeed)
         this.graveGroup.add(grave)
         }
     
@@ -104,7 +105,13 @@ class Play extends Phaser.Scene {
              // increase difficulty after 17 seconds 
             if(elapsedTime > 17000 && !this.difficultyIncreased) {
                 this.gameSpeed += 2
+                this.graveSpeed -= 240
                 this.difficultyIncreased = true
+
+                // adjust the delay value
+                this.time.delayedCall(500, () => {
+                    this.addGrave()
+                })
             }
         }
 

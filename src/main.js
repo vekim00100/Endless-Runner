@@ -1,6 +1,8 @@
-// "Endless Runner Title"
+// "Ghostly Getaway"
 // Vivian Kim
 // Apro Hrs Spent on project
+
+// Your soul just got released from the grave! Avoid getting stuck into another grave!
 
 'use strict'
 
